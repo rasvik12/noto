@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>Выберите заметку или создайте новую.</p>
+<ul>
+    {% for note in notes %}
+        <li><strong>{{ note.title }}</strong>: {{ note.content }}</li>
+    {% else %}
+        <li>Заметок нет.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
