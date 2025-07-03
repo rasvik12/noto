@@ -59,8 +59,34 @@
 
       <main class="main">
         <header class="header">
-          <button class="btn-create" hx-get="/notes/create-form" hx-target="#content" hx-swap="innerHTML">Создать заметку</button>
+            <button class="btn-create" 
+                    hx-get="/notes/create-form" 
+                    hx-target="#content" 
+                    hx-swap="innerHTML">Создать заметку</button>
+
+            <button class="btn-create" onclick="document.getElementById('importModal').style.display = 'block'">
+              Импортировать статью
+            </button>
         </header>
+
+        <!-- Модальное окно -->
+        <div id="importModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:1000;">
+          <div style="background:white; padding:2rem; width:400px; margin:10% auto; border-radius:8px; position:relative;">
+            <h3>Импорт статьи</h3>
+            <form 
+              hx-post="/import/article" 
+              hx-target="#content" 
+              hx-swap="innerHTML"
+              onsubmit="document.getElementById('importModal').style.display='none'">
+              <input type="url" name="url" placeholder="https://example.com/article" required style="width:100%; padding:0.5rem; margin-bottom:1rem;">
+              <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+                <button type="submit" class="btn-create">Импортировать</button>
+                <button type="button" class="btn-create" style="background: #999;" onclick="document.getElementById('importModal').style.display = 'none'">Отмена</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
         <section id="content" style="padding: 1rem;">
           {% block content %}{% endblock %}
         </section>

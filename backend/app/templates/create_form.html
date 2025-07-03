@@ -1,0 +1,20 @@
+
+<form 
+  hx-post="/notes/add"
+  hx-target="#content"
+  hx-swap="beforeend"
+>
+  <label>Заголовок:<br>
+    <input type="text" name="title" value="{{ title|default('') }}" required>
+  </label><br>
+
+  <label>Контент:<br>
+    <textarea name="content" required>{{ content|default('') }}</textarea>
+  </label><br>
+
+  <label>Теги (опционально):<br>
+    <input type="text" name="tags" value="{{ tags|join(', ') if tags else '' }}">
+  </label><br>
+
+  <button type="submit">Сохранить</button>
+</form>

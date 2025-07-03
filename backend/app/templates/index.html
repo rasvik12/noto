@@ -2,11 +2,25 @@
 
 {% block content %}
 <p>Выберите заметку или создайте новую.</p>
-<ul>
-    {% for note in notes %}
-        <li><strong>{{ note.title }}</strong>: {{ note.content }}</li>
-    {% else %}
-        <li>Заметок нет.</li>
-    {% endfor %}
-</ul>
+<div id="content">
+  {% for note in notes %}
+    <div id="note-{{ note.id }}">
+  <h3>{{ note.title }}</h3>
+  <p>{{ note.content }}</p>
+  <p>Теги: {{ note.tags|join(', ') }}</p>
+  <button 
+    hx-get="/notes/{{ note.id }}/edit"
+    hx-target="#note-{{ note.id }}"
+    hx-swap="outerHTML">
+    ✏️ Редактировать
+  </button>
+  <button 
+    hx-delete="/notes/{{ note.id }}/delete"
+    hx-target="#note-{{ note.id }}"
+    hx-swap="outerHTML">
+    🗑 Удалить
+  </button>
+</div>
+  {% endfor %}
+</div>
 {% endblock %}

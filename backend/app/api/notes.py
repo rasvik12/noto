@@ -95,7 +95,11 @@ def update_note_on_id(note_id):
 # Создать заметку
 @notes_bp.route('/', methods=['POST'])
 def create_note():
-    data = request.get_json()
+    if not request.is_json:
+        data = request.form.to_dict()
+        data['tags'] = [t.strip() for t in data.get('tags', '').split(',') if t.strip()]
+    else:
+        data = request.get_json()
 
     title = data.get('title')
     content = data.get('content')
@@ -116,8 +120,10 @@ def create_note():
     db.session.add(note)
     db.session.commit()
 
+    
     # Проверим наличие пустых заметок
     cleanup_unused_tags()
+
     return jsonify({'message': 'Note created', 'id' : note.id}), 201
 
 

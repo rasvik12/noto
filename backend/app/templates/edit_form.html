@@ -1,0 +1,22 @@
+<div id="note-{{ note.id }}">
+  <form 
+    hx-put="/notes/{{ note.id }}/update"
+    hx-target="#note-{{ note.id }}"
+    hx-swap="outerHTML"
+    hx-encoding="multipart/form-data">
+
+    <label>Заголовок:<br>
+      <input type="text" name="title" value="{{ note.title }}" required>
+    </label><br>
+
+    <label>Контент:<br>
+      <textarea name="content" required>{{ note.content }}</textarea>
+    </label><br>
+
+    <label>Теги (через запятую):<br>
+      <input type="text" name="tags" value="{{ note.tags|map(attribute='name')|join(', ') }}">
+    </label><br>
+
+    <button type="submit">💾 Сохранить</button>
+  </form>
+</div>
